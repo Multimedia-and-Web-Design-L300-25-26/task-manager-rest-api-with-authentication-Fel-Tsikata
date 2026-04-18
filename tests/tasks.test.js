@@ -1,10 +1,16 @@
 import request from "supertest";
+import mongoose from "mongoose";
 import app from "../src/app.js";
 
 let token;
 let taskId;
 
 beforeAll(async () => {
+  const collections = mongoose.connection.collections;
+  for (const key in collections) {
+    await collections[key].deleteMany({});
+  }
+
   // Register
   await request(app)
     .post("/api/auth/register")

@@ -1,3 +1,10 @@
-import app from "../src/app.js";
+import mongoose from "mongoose";
+import connectDB from "../src/config/db.js";
 
-export default app;
+beforeAll(async () => {
+  await connectDB();
+}, 10000);
+
+afterAll(async () => {
+  await mongoose.connection.close();
+});
